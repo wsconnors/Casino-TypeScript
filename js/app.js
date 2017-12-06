@@ -1,3 +1,13 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Person = (function () {
     function Person(name, age, amount) {
         this.name = name;
@@ -37,9 +47,9 @@ var Casino = (function () {
     Casino.prototype.getLoginInput = function () {
         var person = new Person(this.inputNameEle.value, parseInt(this.inputAgeEle.value), this.inputCountEle.value);
         this.displayEle.innerHTML += person.toString();
-        this.submit.setAttribute("onclick", "casino.differnt()");
+        this.submit.setAttribute("onclick", "casino.gameOptions()");
     };
-    Casino.prototype.differnt = function () {
+    Casino.prototype.gameOptions = function () {
         console.log("different");
     };
     Casino.prototype.nameInput = function () {
@@ -47,19 +57,24 @@ var Casino = (function () {
     };
     return Casino;
 }());
+var CrapsPlayer = (function (_super) {
+    __extends(CrapsPlayer, _super);
+    function CrapsPlayer() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return CrapsPlayer;
+}(Person));
+/// <reference path="../Person/crapsPerson.ts"/>
 var Craps = (function () {
     function Craps() {
+        this.displayEle = document.getElementById("display");
+        this.buttonEle = document.getElementById("submit");
     }
+    Craps.prototype.init = function () {
+        this.displayEle = "Welcome to craps!";
+    };
     return Craps;
 }());
-var Suit;
-(function (Suit) {
-    Suit[Suit["CLUBS"] = 0] = "CLUBS";
-    Suit[Suit["DIAMONDS"] = 1] = "DIAMONDS";
-    Suit[Suit["HEART"] = 2] = "HEART";
-    Suit[Suit["SPADE"] = 3] = "SPADE";
-})(Suit || (Suit = {}));
-/// <reference path="suit.ts"/>
 var Card = (function () {
     function Card(suit, value) {
         this.suit = suit;
@@ -71,18 +86,34 @@ var Card = (function () {
     Card.prototype.getValue = function () {
         return this.value;
     };
+    Card.prototype.toString = function () {
+        return "Suit: " + this.suit + "/Value: " + this.value;
+    };
     return Card;
 }());
 /// <reference path="card.ts"/>
-/// <reference path="suit.ts"/>
 var Deck = (function () {
     function Deck() {
         this.cards = [];
+        this.suits = ["HEARTS", "DIAMONDS", "CLUBS", "SPADES"];
+        this.values = ["ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "JACK", "QUEEN", "KING", "ACE"];
     }
     Deck.prototype.createFullDeck = function () {
-        for (var suit in Suit) {
-            console.log(suit);
+        for (var suit in this.suits) {
+            for (var value in this.values) {
+                this.cards.push(new Card(this.suits[suit], this.values[value]));
+            }
         }
+        this.shuffle();
+        document.getElementById("display").innerHTML += this.cards.join("<br>");
+    };
+    Deck.prototype.shuffle = function () {
+        for (var i = 0; i < this.cards.length; i++) {
+            var randonNum = Math.floor(Math.random() * this.cards.length) + 1;
+            console.log(randonNum);
+            _a = [this.cards[randonNum], this.cards[i]], this.cards[i] = _a[0], this.cards[randonNum] = _a[1];
+        }
+        var _a;
     };
     return Deck;
 }());

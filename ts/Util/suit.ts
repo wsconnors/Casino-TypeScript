@@ -1,3 +1,0 @@
-enum Suit{
-  CLUBS,DIAMONDS,HEART,SPADE
-}

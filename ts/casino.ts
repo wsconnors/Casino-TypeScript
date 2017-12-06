@@ -29,10 +29,10 @@ class Casino{
 
     let person:Person = new Person(this.inputNameEle.value,parseInt(this.inputAgeEle.value),this.inputCountEle.value);
     this.displayEle.innerHTML += person.toString();
-    this.submit.setAttribute("onclick","casino.differnt()")
+    this.submit.setAttribute("onclick","casino.gameOptions()")
   }
 
-  differnt():void{
+  gameOptions():void{
     console.log("different");
   }
 
