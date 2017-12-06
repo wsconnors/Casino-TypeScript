@@ -1,4 +1,4 @@
-var Person = (function () {
+var Person = /** @class */ (function () {
     function Person(name, age, amount) {
         this.name = name;
         this.age = age;
@@ -19,7 +19,7 @@ var Person = (function () {
     return Person;
 }());
 /// <reference path="Person/person.ts"/>
-var Casino = (function () {
+var Casino = /** @class */ (function () {
     function Casino() {
         this.displayEle = document.getElementById("display");
         this.inputNameEle = document.getElementById("user_name");
@@ -47,9 +47,44 @@ var Casino = (function () {
     };
     return Casino;
 }());
-var Craps = (function () {
+var Craps = /** @class */ (function () {
     function Craps() {
     }
+    Craps.prototype.init = function () {
+        document.getElementById("display").innerHTML += "Welcome to Craps!";
+    };
+    Craps.prototype.wonRound = function (params) {
+        var win = 0;
+        var lose = 0;
+        var diceValue = Dice.getRandomInt(2, 12);
+        document.getElementById("display").innerHTML += diceValue;
+        if (diceValue === 7 || diceValue === 11) {
+            win = 1;
+            var rollWin = "You rolled " + diceValue + ". You Win!";
+            document.getElementById("display").innerHTML += rollWin;
+        }
+        else if (diceValue === 2 || diceValue === 3 || diceValue === 12) {
+            lose = 1;
+            var rollLose = "You rolled " + diceValue + ". You Lose.";
+            document.getElementById("display").innerHTML += rollLose;
+        }
+        else {
+            document.getElementById("display").innerHTML += "Keep rolling until you hit the point number.";
+            var secondRoll = Dice.getRandomInt(2, 12);
+            while (secondRoll != diceValue && secondRoll != 7) {
+                secondRoll = Dice.getRandomInt(2, 12);
+            }
+            if (secondRoll === 7) {
+                document.getElementById("display").innerHTML += "You rolled a 7. You Lost!";
+                lose = 1;
+            }
+            else {
+                document.getElementById("display").innerHTML += "You rolled the point number " + secondRoll + "You Win!";
+                win = 1;
+            }
+        }
+        return win > lose;
+    };
     return Craps;
 }());
 var Suit;
@@ -60,7 +95,7 @@ var Suit;
     Suit[Suit["SPADE"] = 3] = "SPADE";
 })(Suit || (Suit = {}));
 /// <reference path="suit.ts"/>
-var Card = (function () {
+var Card = /** @class */ (function () {
     function Card(suit, value) {
         this.suit = suit;
         this.value = value;
@@ -75,7 +110,7 @@ var Card = (function () {
 }());
 /// <reference path="card.ts"/>
 /// <reference path="suit.ts"/>
-var Deck = (function () {
+var Deck = /** @class */ (function () {
     function Deck() {
         this.cards = [];
     }
@@ -89,8 +124,45 @@ var Deck = (function () {
 /// <reference path="casino.ts"/>
 /// <reference path="games/craps.ts"/>
 /// <reference path="Util/deck.ts"/>
-var casino = new Casino();
-casino.init();
+// var casino = new Casino();
+// casino.init();
 var craps = new Craps();
+craps.init();
 var deck = new Deck();
+var Dice = /** @class */ (function () {
+    function Dice() {
+    }
+    Dice.getRandomInt = function (min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    };
+    return Dice;
+}());
+var Value;
+(function (Value) {
+    Value[Value["TWO"] = 2] = "TWO";
+    Value[Value["THREE"] = 3] = "THREE";
+    Value[Value["FOUR"] = 4] = "FOUR";
+    Value[Value["FIVE"] = 5] = "FIVE";
+    Value[Value["SIX"] = 6] = "SIX";
+    Value[Value["SEVEN"] = 7] = "SEVEN";
+    Value[Value["EIGHT"] = 8] = "EIGHT";
+    Value[Value["NINE"] = 9] = "NINE";
+    Value[Value["TEN"] = 10] = "TEN";
+    Value[Value["JACK"] = 10] = "JACK";
+    Value[Value["QUEEN"] = 10] = "QUEEN";
+    Value[Value["KING"] = 10] = "KING";
+    Value[Value["ACE"] = 11] = "ACE";
+    // private final int value;
+    // Value(int value){
+    //     this.value = value;
+    // }
+    // public int getValue() {
+    //     return value; }
+    Value[Value["private"] = value] = "private";
+    Value[Value["number"] = void 0] = "number";
+    Value[Value["constructor"] = function (value) {
+    }] = "constructor";
+})(Value || (Value = {}));
 //# sourceMappingURL=app.js.map
