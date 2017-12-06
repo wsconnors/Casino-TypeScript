@@ -1,17 +1,20 @@
-/// <reference path="suit.ts"/>
 
 class Card{
-  private suit: Suit;
-  private value: number;
+  private suit: string;
+  private value: string;
 
-  constructor(suit:Suit,value: number){
+  constructor(suit:string,value: string){
     this.suit = suit;
     this.value = value;
   }
-  getSuit(): Suit{
+  getSuit(): string{
     return this.suit;
   }
-  getValue(): number{
+  getValue(): string{
     return this.value;
+  }
+
+  toString():string{
+    return "Suit: "+this.suit+"/Value: "+this.value;
   }
 }
