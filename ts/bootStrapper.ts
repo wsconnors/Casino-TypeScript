@@ -1,8 +1,12 @@
 /// <reference path="casino.ts"/>
 /// <reference path="games/craps.ts"/>
 /// <reference path="Util/deck.ts"/>
+/// <reference path="games/goFish.ts"/>
+/// <reference path="Player/gofishPlayer.ts"/>
 
-var casino = new Casino();
+let casino = new Casino();
 casino.init();
-var craps = new Craps();
-var deck = new Deck()
+// var craps = new Craps();
+// var deck = new Deck()
+let goFish = new GoFish(casion.getPlayer())
+//goFish.init();

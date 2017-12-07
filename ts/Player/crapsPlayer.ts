@@ -1,3 +1,1 @@
-class CrapsPlayer extends Person{
-
-}
+/// <reference path="player.ts"/>
