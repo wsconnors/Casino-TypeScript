@@ -23,7 +23,7 @@ class Casino{
   }
 
   loginOptions():void{
-    this.displayEle.innerHTML = "Enter name";
+    this.displayEle.innerHTML = "Enter your name";
   }
 
   getName():void{

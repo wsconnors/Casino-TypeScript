@@ -293,7 +293,7 @@ var Casino = (function () {
         //this.gameOptions();
     };
     Casino.prototype.loginOptions = function () {
-        this.displayEle.innerHTML = "Enter name";
+        this.displayEle.innerHTML = "Enter your name";
     };
     Casino.prototype.getName = function () {
         this.name = this.textInput.value;
