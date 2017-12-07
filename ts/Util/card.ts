@@ -1,20 +1,26 @@
 
 class Card{
   private suit: string;
-  private value: string;
+  private numValue:number;
+  private faceValue: string;
 
-  constructor(suit:string,value: string){
+  constructor(suit:string,numValue:number,faceValue: string){
     this.suit = suit;
-    this.value = value;
+    this.numValue = numValue;
+    this.faceValue = faceValue;
   }
   getSuit(): string{
     return this.suit;
   }
-  getValue(): string{
-    return this.value;
+  getNumValue(): number{
+    return this.numValue;
+  }
+  getFaceValue(): string{
+    return this.faceValue;
   }
 
   toString():string{
-    return "Suit: "+this.suit+"/Value: "+this.value;
+    return this.faceValue +" of "+this.suit;
+    //return "Suit: "+this.suit+" Value: "+this.value;
   }
 }

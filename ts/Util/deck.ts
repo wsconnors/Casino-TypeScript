@@ -4,31 +4,40 @@ class Deck {
 
   private cards: Card[];
   private suits: string[];
-  private values: string[]
+  private faceValues: string[]
 
   constructor() {
     this.cards = [];
     this.suits = ["HEARTS","DIAMONDS","CLUBS","SPADES"];
-    this.values = ["ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN","JACK","QUEEN","KING","ACE"]
+    this.faceValues = ["ACE","2","3","4","5","6","7","8","9","10","JACK","QUEEN","KING"]
   }
 
-  createFullDeck(): void{//Card[] {
-    for (let suit in this.suits) {
-        for (let value in this.values) {
-            this.cards.push(new Card(this.suits[suit],this.values[value]));
+  createFullDeck(): void{
+    for (let suit of this.suits) {
+        for (let i = 0; i < this.faceValues.length; i++) {
+            let num = i+1;
+            if (num > 10){
+              num = 10
+            }
+            this.cards.push(new Card(suit,num,this.faceValues[i]))
         }
     }
     this.shuffle();
+<<<<<<< HEAD
     //document.getElementById("display").innerHTML += this.cards.join("<br>");
+=======
+  }
+
+  getDeck():Card[]{
+    this.createFullDeck();
+    return this.cards;
+>>>>>>> 612fd451cd86aea83968f578dc1d57b6afa324c3
   }
 
   shuffle():void{
     for (let i = 0; i < this.cards.length; i++) {
-        let randonNum: number = Math.floor(Math.random()*this.cards.length)+1;
-        console.log(randonNum);
+        let randonNum: number = Math.floor(Math.random()*this.cards.length);
         [this.cards[i], this.cards[randonNum]] = [this.cards[randonNum],this.cards[i]];
     }
   }
-
-
 }
