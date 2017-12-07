@@ -17,5 +17,4 @@ class Blackjack extends CardGame {
         this.player = new player: Blackjack;
         this.dealer = new dealer: Blackjack;
     }
-
 }
