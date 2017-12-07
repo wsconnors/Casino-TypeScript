@@ -15,6 +15,7 @@ let casino = new Casino();
 casino.init();
 // var craps = new Craps();
 // var deck = new Deck()
-let goFish = new GoFish(casion.getPlayer())
+
+// let goFish = new GoFish(casino.getPlayer())
 //goFish.init();
 >>>>>>> 612fd451cd86aea83968f578dc1d57b6afa324c3

@@ -159,6 +159,9 @@ var CardGame = (function () {
             player.addCard(this.deck.pop());
         }
     };
+    CardGame.prototype.getDeck = function () {
+        return this.deck;
+    };
     return CardGame;
 }());
 /// <reference path="cardGame.ts"/>
@@ -169,39 +172,46 @@ var GoFish = (function (_super) {
         _this.display = document.getElementById("display");
         _this.input = document.getElementById("text_input");
         _this.buttom = document.getElementById("submit");
-        _this.player = new GoFishPlayer(inPlayer);
+        _this.player = new GoFishPlayer(player);
         _this.dealer = new GoFishPlayer(new Player("Dealer", 0, 0));
         return _this;
     }
-    GoFish.prototype.init = function (inPlayer) {
+    GoFish.prototype.init = function () {
         this.display.innerHTML = "";
         document.getElementById("header").innerHTML = "Welcome to Go Fish!";
         document.getElementById("cardGame").hidden = false;
         this.input.setAttribute("placeholder", "ASK CARD");
         this.input.value = "";
-        this.buttom.setAttribute("onclick", "goFish.askPlayerForCardClick()");
+        this.buttom.setAttribute("onclick", "casino.goFish.askPlayerForCardClick()");
         this.dealCards(this.dealer, this.player, 7);
         this.playerTurn();
     };
     GoFish.prototype.playerTurn = function () {
         this.display.innerHTML += "What would you like to ask for?";
         this.player.displayHand();
+        document.getElementById("userNameHand").innerHTML = "User Hand | You have " + this.player.getBookCount() + this.spelling(this.player.getBookCount());
+        console.clear();
         console.log("Dealer Hand");
         this.dealer.logHand();
     };
+    GoFish.prototype.spelling = function (num) {
+        if (num == 1) {
+            return " book";
+        }
+        return " books";
+    };
     GoFish.prototype.dealerTurn = function () {
         var randonNum = Math.floor(Math.random() * this.dealer.getHand().length);
-        console.log(this.dealer.getHand());
         var dealerAsk = this.dealer.getHand()[randonNum].getFaceValue();
         this.display.innerHTML += "<br>Dealer asks for " + dealerAsk + ".";
         this.dealerCheck(dealerAsk);
     };
     GoFish.prototype.dealerCheck = function (askCard) {
-        //this.checkBooks(this.dealer);
         if (this.checkInHand(askCard, this.player)) {
             this.swapCards(this.player, this.dealer, askCard);
             this.checkHandSize(this.player);
             this.display.innerHTML += "<br>Dealer got a match<br>";
+            this.checkBooks(this.dealer);
             this.dealerTurn();
         }
         else {
@@ -211,14 +221,13 @@ var GoFish = (function (_super) {
         }
     };
     GoFish.prototype.askPlayerForCardClick = function () {
-        //this.checkBooks(this.player);
-        console.log(this.player);
         var playerInput = this.input.value.toLowerCase();
         this.input.value = "";
         if (this.checkInHand(playerInput, this.dealer)) {
             this.swapCards(this.dealer, this.player, playerInput);
             this.checkHandSize(this.dealer);
             this.display.innerHTML = "You got a match<br>";
+            this.checkBooks(this.player);
             this.playerTurn();
         }
         else {
@@ -294,8 +303,8 @@ var Casino = (function () {
         this.submit = document.getElementById("submit");
     }
     Casino.prototype.init = function () {
-        //this.loginOptions();
-        this.gameOptions();
+        this.loginOptions();
+        //this.gameOptions();
     };
     Casino.prototype.loginOptions = function () {
         this.displayEle.innerHTML = "Enter name";
@@ -331,9 +340,8 @@ var Casino = (function () {
         var input = this.textInput.value;
         switch (input.toLowerCase()) {
             case "go fish": {
-                console.log("hi");
-                var goFish_1 = new GoFish();
-                goFish_1.init(this.player);
+                this.goFish = new GoFish(this.player);
+                this.goFish.init();
             }
         }
     };
@@ -532,7 +540,7 @@ var casino = new Casino();
 casino.init();
 // var craps = new Craps();
 // var deck = new Deck()
-var goFish = new GoFish(casion.getPlayer());
+// let goFish = new GoFish(casino.getPlayer())
 //goFish.init();
 /// <reference path="player.ts"/>
 >>>>>>> 612fd451cd86aea83968f578dc1d57b6afa324c3
