@@ -9,6 +9,7 @@ class Casino{
   age:number;
   amount:number;
   player:Player;
+  public goFish;
 
   constructor() {
     this.displayEle = document.getElementById("display");
@@ -17,8 +18,8 @@ class Casino{
   }
 
   init():void{
-    //this.loginOptions();
-    this.gameOptions();
+    this.loginOptions();
+    //this.gameOptions();
   }
 
   loginOptions():void{
@@ -60,9 +61,8 @@ class Casino{
     let input:string = this.textInput.value;
     switch(input.toLowerCase()){
       case "go fish":{
-        console.log("hi")
-        let goFish = new GoFish();
-        goFish.init(this.player);
+        this.goFish = new GoFish(this.player);
+        this.goFish.init();
       }
     }
   }

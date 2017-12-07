@@ -21,4 +21,7 @@ class CardGame{
         player.addCard(this.deck.pop());
     }
   }
+  getDeck():Card[]{
+    return this.deck;
+  }
 }
