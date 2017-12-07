@@ -13,7 +13,6 @@ class GoFish extends CardGame{
     this.player = new GoFishPlayer(player);
     this.dealer = new GoFishPlayer(new Player("Dealer",0,0));
   }
-
   init(){
     this.display.innerHTML = "";
     document.getElementById("header").innerHTML = "Welcome to Go Fish!"
