@@ -19,7 +19,7 @@ class Deck {
         }
     }
     this.shuffle();
-    document.getElementById("display").innerHTML += this.cards.join("<br>");
+    //document.getElementById("display").innerHTML += this.cards.join("<br>");
   }
 
   shuffle():void{
