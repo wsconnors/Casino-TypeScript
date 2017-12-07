@@ -10,17 +10,17 @@ class GoFish extends CardGame{
     this.display = document.getElementById("display");
     this.input = document.getElementById("text_input");
     this.buttom = document.getElementById("submit");
-    this.player = new GoFishPlayer(player);
+    this.player = new GoFishPlayer(inPlayer);
     this.dealer = new GoFishPlayer(new Player("Dealer",0,0));
   }
 
-  init(){
+  init(inPlayer:Player){
     this.display.innerHTML = "";
     document.getElementById("header").innerHTML = "Welcome to Go Fish!"
     document.getElementById("cardGame").hidden = false;
     this.input.setAttribute("placeholder","ASK CARD")
     this.input.value = "";
-    this.buttom.setAttribute("onclick","casino.goFish.askPlayerForCardClick()");
+    this.buttom.setAttribute("onclick","goFish.askPlayerForCardClick()");
     this.dealCards(this.dealer,this.player,7);
     this.playerTurn();
   }
@@ -28,32 +28,24 @@ class GoFish extends CardGame{
   playerTurn():void{
     this.display.innerHTML += "What would you like to ask for?"
     this.player.displayHand();
-    document.getElementById("userNameHand").innerHTML = "User Hand | You have "+this.player.getBookCount()+this.spelling(this.player.getBookCount());
-    console.clear();
     console.log("Dealer Hand");
     this.dealer.logHand()
   }
 
-  spelling(num:number):string{
-    if(num == 1){
-      return " book"
-    }
-    return " books"
-  }
-
   dealerTurn():void{
     let randonNum:number = Math.floor(Math.random()*this.dealer.getHand().length);
+    console.log(this.dealer.getHand())
     let dealerAsk:string = this.dealer.getHand()[randonNum].getFaceValue();
     this.display.innerHTML+="<br>Dealer asks for "+dealerAsk+".";
     this.dealerCheck(dealerAsk);
   }
 
   dealerCheck(askCard:string){
+    //this.checkBooks(this.dealer);
     if(this.checkInHand(askCard,this.player)){
       this.swapCards(this.player,this.dealer,askCard);
       this.checkHandSize(this.player);
       this.display.innerHTML += "<br>Dealer got a match<br>";
-      this.checkBooks(this.dealer);
       this.dealerTurn();
     }else{
       this.display.innerHTML += "<br>Dealer did not get a match<br>";
@@ -63,13 +55,14 @@ class GoFish extends CardGame{
   }
 
   askPlayerForCardClick(){
+    //this.checkBooks(this.player);
+    console.log(this.player);
     let playerInput:string = this.input.value.toLowerCase();
     this.input.value = "";
     if(this.checkInHand(playerInput,this.dealer)){
       this.swapCards(this.dealer,this.player,playerInput);
       this.checkHandSize(this.dealer);
       this.display.innerHTML = "You got a match<br>";
-      this.checkBooks(this.player);
       this.playerTurn();
     }else{
       this.display.innerHTML = "No match GO FISH!<br>";
@@ -78,7 +71,6 @@ class GoFish extends CardGame{
     }
 
   }
-
 
   checkHandSize(player:CardPlayer){
     if(player.getHand().length == 0){
