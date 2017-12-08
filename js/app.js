@@ -158,7 +158,7 @@ var GoFish = (function (_super) {
         var _this = _super.call(this) || this;
         _this.display = document.getElementById("display");
         _this.input = document.getElementById("text_input");
-        _this.buttom = document.getElementById("submit");
+        _this.button = document.getElementById("submit");
         _this.player = new GoFishPlayer(player);
         _this.dealer = new GoFishPlayer(new Player("Dealer", 0, 0));
         return _this;
@@ -169,7 +169,7 @@ var GoFish = (function (_super) {
         document.getElementById("cardGame").hidden = false;
         this.input.setAttribute("placeholder", "ASK CARD");
         this.input.value = "";
-        this.buttom.setAttribute("onclick", "casino.goFish.askPlayerForCardClick()");
+        this.button.setAttribute("onclick", "casino.goFish.askPlayerForCardClick()");
         this.dealCards(this.dealer, this.player, 7);
         this.playerTurn();
     };
@@ -339,17 +339,25 @@ var Casino = (function () {
     };
     return Casino;
 }());
-/// <reference path="../Person/crapsPerson.ts"/>
-var Craps = (function () {
-    function Craps() {
-        this.displayEle = document.getElementById("display");
-        this.buttonEle = document.getElementById("submit");
-    }
-    Craps.prototype.init = function () {
-        this.displayEle = "Welcome to craps!";
-    };
-    return Craps;
-}());
+// /// <reference path="../Person/crapsPerson.ts"/>
+// class Craps{
+//   crapsPlayer: CrapsPlayer;
+//   bet:number;
+//   displayEle:any;
+//   buttonEle:any;
+//
+//   constructor(){
+//     this.displayEle = document.getElementById("display");
+//     this.buttonEle = document.getElementById("submit");
+//   }
+//
+//   init():void{
+//     this.displayEle = "Welcome to craps!";
+//   }
+//
+//
+//
+// }
 /// <reference path="cardPlayer.ts"/>
 var GoFishPlayer = (function (_super) {
     __extends(GoFishPlayer, _super);
@@ -377,5 +385,30 @@ casino.init();
 // var deck = new Deck()
 // let goFish = new GoFish(casino.getPlayer())
 //goFish.init();
+var BlackjackPlayer = (function () {
+    function BlackjackPlayer() {
+    }
+    return BlackjackPlayer;
+}());
 /// <reference path="player.ts"/>
+var Blackjack = (function (_super) {
+    __extends(Blackjack, _super);
+    function Blackjack(player) {
+        var _this = _super.call(this) || this;
+        _this.display = document.getElementById("display");
+        _this.input = document.getElementById("text_input");
+        _this.buttom = document.getElementById("submit");
+        _this.player = new GoFishPlayer(player);
+        _this.dealer = new GoFishPlayer(new Player("Dealer", 0, 0));
+        return _this;
+    }
+    return Blackjack;
+}(CardGame));
+var BlackjackDealer = (function (_super) {
+    __extends(BlackjackDealer, _super);
+    function BlackjackDealer() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return BlackjackDealer;
+}(BlackjackPlayer));
 //# sourceMappingURL=app.js.map

@@ -4,12 +4,12 @@ class GoFish extends CardGame{
   dealer:GoFishPlayer;
   display:any;
   input:any;
-  buttom:any;
+  button:any;
   constructor(player:Player){
     super();
     this.display = document.getElementById("display");
     this.input = document.getElementById("text_input");
-    this.buttom = document.getElementById("submit");
+    this.button = document.getElementById("submit");
     this.player = new GoFishPlayer(player);
     this.dealer = new GoFishPlayer(new Player("Dealer",0,0));
   }
@@ -19,7 +19,7 @@ class GoFish extends CardGame{
     document.getElementById("cardGame").hidden = false;
     this.input.setAttribute("placeholder","ASK CARD")
     this.input.value = "";
-    this.buttom.setAttribute("onclick","casino.goFish.askPlayerForCardClick()");
+    this.button.setAttribute("onclick","casino.goFish.askPlayerForCardClick()");
     this.dealCards(this.dealer,this.player,7);
     this.playerTurn();
   }
