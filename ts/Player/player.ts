@@ -1,4 +1,4 @@
-class Person{
+class Player{
   name:string;
   age:number;
   amount:number;
@@ -20,6 +20,6 @@ class Person{
   }
 
   toString(): string{
-    return "<br>Name: "+this.name+"<br>Age: "+this.age+"<br>Amount: "+this.amount;
+    return "Name: "+this.name+" | Age: "+this.age+" | Amount: "+this.amount;
   }
 }
