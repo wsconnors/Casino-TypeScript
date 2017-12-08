@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Player = (function () {
+var Player = /** @class */ (function () {
     function Player(name, age, amount) {
         this.name = name;
         this.age = age;
@@ -28,7 +28,7 @@ var Player = (function () {
     };
     return Player;
 }());
-var Card = (function () {
+var Card = /** @class */ (function () {
     function Card(suit, numValue, faceValue) {
         this.suit = suit;
         this.numValue = numValue;
@@ -50,7 +50,7 @@ var Card = (function () {
     return Card;
 }());
 /// <reference path="card.ts"/>
-var Deck = (function () {
+var Deck = /** @class */ (function () {
     function Deck() {
         this.cards = [];
         this.suits = ["HEARTS", "DIAMONDS", "CLUBS", "SPADES"];
@@ -83,7 +83,7 @@ var Deck = (function () {
     return Deck;
 }());
 /// <reference path="player.ts"/>
-var CardPlayer = (function (_super) {
+var CardPlayer = /** @class */ (function (_super) {
     __extends(CardPlayer, _super);
     function CardPlayer() {
         var _this = _super.call(this, "CardPlayer", 0, 0) || this;
@@ -119,7 +119,7 @@ var CardPlayer = (function (_super) {
     return CardPlayer;
 }(Player));
 /// <reference path="cardPlayer.ts"/>
-var CardDealer = (function (_super) {
+var CardDealer = /** @class */ (function (_super) {
     __extends(CardDealer, _super);
     function CardDealer() {
         return _super.call(this) || this;
@@ -129,7 +129,7 @@ var CardDealer = (function (_super) {
 /// <reference path="../Util/deck.ts"/>
 /// <reference path="../Player/cardPlayer.ts"/>
 /// <reference path="../Player/cardDealer.ts"/>
-var CardGame = (function () {
+var CardGame = /** @class */ (function () {
     function CardGame() {
         this.deck = new Deck().getDeck();
     }
@@ -152,7 +152,7 @@ var CardGame = (function () {
     return CardGame;
 }());
 /// <reference path="cardGame.ts"/>
-var GoFish = (function (_super) {
+var GoFish = /** @class */ (function (_super) {
     __extends(GoFish, _super);
     function GoFish(player) {
         var _this = _super.call(this) || this;
@@ -282,7 +282,7 @@ var GoFish = (function (_super) {
 }(CardGame));
 /// <reference path="Player/player.ts"/>
 /// <reference path="games/goFish.ts"/>
-var Casino = (function () {
+var Casino = /** @class */ (function () {
     function Casino() {
         this.displayEle = document.getElementById("display");
         this.textInput = document.getElementById("text_input");
@@ -329,6 +329,10 @@ var Casino = (function () {
                 this.goFish = new GoFish(this.player);
                 this.goFish.init();
             }
+            case "craps": {
+                this.craps = new Craps(this.player);
+                this.craps.init();
+            }
         }
     };
     Casino.prototype.nameInput = function () {
@@ -339,19 +343,54 @@ var Casino = (function () {
     };
     return Casino;
 }());
-/// <reference path="../Person/crapsPerson.ts"/>
-var Craps = (function () {
-    function Craps() {
-        this.displayEle = document.getElementById("display");
-        this.buttonEle = document.getElementById("submit");
+var Craps = /** @class */ (function () {
+    function Craps(player) {
+        this.display = document.getElementById("display");
+        this.input = document.getElementById("text_input");
+        this.button = document.getElementById("submit");
     }
     Craps.prototype.init = function () {
-        this.displayEle = "Welcome to craps!";
+        document.getElementById("display").innerHTML = "Welcome to Craps!";
+        this.button.value = "Roll The Dice";
+        this.button.setAttribute("onclick", "casino.craps.wonRound()");
+        this.input.hidden = true;
+    };
+    Craps.prototype.wonRound = function () {
+        var win = 0;
+        var lose = 0;
+        var diceValue = Dice.getRandomInt(2, 12);
+        document.getElementById("display").innerHTML += "<br>" + diceValue;
+        if (diceValue === 7 || diceValue === 11) {
+            win = 1;
+            var rollWin = "You rolled " + diceValue + ". <br>You Win!";
+            document.getElementById("display").innerHTML += "<br>" + rollWin;
+        }
+        else if (diceValue === 2 || diceValue === 3 || diceValue === 12) {
+            lose = 1;
+            var rollLose = "You rolled " + diceValue + ". You Lose.";
+            document.getElementById("display").innerHTML += "<br>" + rollLose;
+        }
+        else {
+            document.getElementById("display").innerHTML += "<br>" + "Keep rolling until you hit the point number.";
+            var secondRoll = Dice.getRandomInt(2, 12);
+            while (secondRoll != diceValue && secondRoll != 7) {
+                secondRoll = Dice.getRandomInt(2, 12);
+            }
+            if (secondRoll === 7) {
+                document.getElementById("display").innerHTML += "<br>" + "You rolled a 7. You Lost!";
+                lose = 1;
+            }
+            else {
+                document.getElementById("display").innerHTML += "<br>" + "You rolled the point number " + secondRoll + "You Win!";
+                win = 1;
+            }
+        }
+        return win > lose;
     };
     return Craps;
 }());
 /// <reference path="cardPlayer.ts"/>
-var GoFishPlayer = (function (_super) {
+var GoFishPlayer = /** @class */ (function (_super) {
     __extends(GoFishPlayer, _super);
     function GoFishPlayer(player) {
         var _this = _super.call(this) || this;
@@ -377,5 +416,32 @@ casino.init();
 // var deck = new Deck()
 // let goFish = new GoFish(casino.getPlayer())
 //goFish.init();
+/// <reference path="cardGame.ts" />
+var Blackjack = /** @class */ (function (_super) {
+    __extends(Blackjack, _super);
+    // private var pot: number = 0;
+    function Blackjack(player) {
+        var _this = _super.call(this) || this;
+        _this.display = document.getElementById("display");
+        _this.input = document.getElementById("text_input");
+        _this.button = document.getElementById("submit");
+        _this.player = new player;
+        Blackjack;
+        _this.dealer = new dealer;
+        Blackjack;
+        return _this;
+    }
+    return Blackjack;
+}(CardGame));
 /// <reference path="player.ts"/>
+var Dice = /** @class */ (function () {
+    function Dice() {
+    }
+    Dice.getRandomInt = function (min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    };
+    return Dice;
+}());
 //# sourceMappingURL=app.js.map
