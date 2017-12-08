@@ -23,15 +23,11 @@ class Deck {
         }
     }
     this.shuffle();
-<<<<<<< HEAD
-    //document.getElementById("display").innerHTML += this.cards.join("<br>");
-=======
   }
 
   getDeck():Card[]{
     this.createFullDeck();
     return this.cards;
->>>>>>> 612fd451cd86aea83968f578dc1d57b6afa324c3
   }
 
   shuffle():void{

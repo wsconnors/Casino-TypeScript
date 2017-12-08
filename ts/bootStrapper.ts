@@ -4,13 +4,6 @@
 /// <reference path="games/goFish.ts"/>
 /// <reference path="Player/gofishPlayer.ts"/>
 
-<<<<<<< HEAD
-// var casino = new Casino();
-// casino.init();
-var craps = new Craps();
-craps.init();
-var deck = new Deck()
-=======
 let casino = new Casino();
 casino.init();
 // var craps = new Craps();
@@ -18,4 +11,3 @@ casino.init();
 
 // let goFish = new GoFish(casino.getPlayer())
 //goFish.init();
->>>>>>> 612fd451cd86aea83968f578dc1d57b6afa324c3

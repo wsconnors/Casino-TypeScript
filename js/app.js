@@ -28,6 +28,258 @@ var Player = /** @class */ (function () {
     };
     return Player;
 }());
+var Card = /** @class */ (function () {
+    function Card(suit, numValue, faceValue) {
+        this.suit = suit;
+        this.numValue = numValue;
+        this.faceValue = faceValue;
+    }
+    Card.prototype.getSuit = function () {
+        return this.suit;
+    };
+    Card.prototype.getNumValue = function () {
+        return this.numValue;
+    };
+    Card.prototype.getFaceValue = function () {
+        return this.faceValue;
+    };
+    Card.prototype.toString = function () {
+        return this.faceValue + " of " + this.suit;
+        //return "Suit: "+this.suit+" Value: "+this.value;
+    };
+    return Card;
+}());
+/// <reference path="card.ts"/>
+var Deck = /** @class */ (function () {
+    function Deck() {
+        this.cards = [];
+        this.suits = ["HEARTS", "DIAMONDS", "CLUBS", "SPADES"];
+        this.faceValues = ["ACE", "2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING"];
+    }
+    Deck.prototype.createFullDeck = function () {
+        for (var _i = 0, _a = this.suits; _i < _a.length; _i++) {
+            var suit = _a[_i];
+            for (var i = 0; i < this.faceValues.length; i++) {
+                var num = i + 1;
+                if (num > 10) {
+                    num = 10;
+                }
+                this.cards.push(new Card(suit, num, this.faceValues[i]));
+            }
+        }
+        this.shuffle();
+    };
+    Deck.prototype.getDeck = function () {
+        this.createFullDeck();
+        return this.cards;
+    };
+    Deck.prototype.shuffle = function () {
+        for (var i = 0; i < this.cards.length; i++) {
+            var randonNum = Math.floor(Math.random() * this.cards.length);
+            _a = [this.cards[randonNum], this.cards[i]], this.cards[i] = _a[0], this.cards[randonNum] = _a[1];
+        }
+        var _a;
+    };
+    return Deck;
+}());
+/// <reference path="player.ts"/>
+var CardPlayer = /** @class */ (function (_super) {
+    __extends(CardPlayer, _super);
+    function CardPlayer() {
+        var _this = _super.call(this, "CardPlayer", 0, 0) || this;
+        _this.hand = [];
+        return _this;
+    }
+    CardPlayer.prototype.getHand = function () {
+        return this.hand;
+    };
+    CardPlayer.prototype.addCard = function (card) {
+        this.hand.push(card);
+    };
+    CardPlayer.prototype.clearHand = function () {
+        this.hand = [];
+    };
+    CardPlayer.prototype.setHand = function (hand) {
+        this.hand = hand;
+    };
+    CardPlayer.prototype.displayHand = function () {
+        var displayHand = document.getElementById("playerHand");
+        displayHand.innerHTML = "";
+        this.hand.sort();
+        for (var i = 0; i < this.hand.length; i++) {
+            var currentCard = this.hand[i];
+            displayHand.innerHTML += "<img src = ././images/cards/" + currentCard.getFaceValue() + "_of_" + currentCard.getSuit() + ".png width=\"90\"height=\130\">";
+        }
+    };
+    CardPlayer.prototype.logHand = function () {
+        for (var i = 0; i < this.hand.length; i++) {
+            console.log(this.hand[i].getFaceValue() + " " + this.hand[i].getSuit());
+        }
+    };
+    return CardPlayer;
+}(Player));
+/// <reference path="cardPlayer.ts"/>
+var CardDealer = /** @class */ (function (_super) {
+    __extends(CardDealer, _super);
+    function CardDealer() {
+        return _super.call(this) || this;
+    }
+    return CardDealer;
+}(CardPlayer));
+/// <reference path="../Util/deck.ts"/>
+/// <reference path="../Player/cardPlayer.ts"/>
+/// <reference path="../Player/cardDealer.ts"/>
+var CardGame = /** @class */ (function () {
+    function CardGame() {
+        this.deck = new Deck().getDeck();
+    }
+    CardGame.prototype.dealCards = function (dealer, player, amount) {
+        dealer.clearHand();
+        player.clearHand();
+        for (var i = 0; i < amount; i++) {
+            dealer.addCard(this.deck.pop());
+            player.addCard(this.deck.pop());
+        }
+    };
+    CardGame.prototype.giveCards = function (player, amount) {
+        for (var i = 0; i < amount; i++) {
+            player.addCard(this.deck.pop());
+        }
+    };
+    CardGame.prototype.getDeck = function () {
+        return this.deck;
+    };
+    return CardGame;
+}());
+/// <reference path="cardGame.ts"/>
+var GoFish = /** @class */ (function (_super) {
+    __extends(GoFish, _super);
+    function GoFish(player) {
+        var _this = _super.call(this) || this;
+        _this.display = document.getElementById("display");
+        _this.input = document.getElementById("text_input");
+        _this.buttom = document.getElementById("submit");
+        _this.player = new GoFishPlayer(player);
+        _this.dealer = new GoFishPlayer(new Player("Dealer", 0, 0));
+        return _this;
+    }
+    GoFish.prototype.init = function () {
+        this.display.innerHTML = "";
+        document.getElementById("header").innerHTML = "Welcome to Go Fish!";
+        document.getElementById("cardGame").hidden = false;
+        this.input.setAttribute("placeholder", "ASK CARD");
+        this.input.value = "";
+        this.buttom.setAttribute("onclick", "casino.goFish.askPlayerForCardClick()");
+        this.dealCards(this.dealer, this.player, 7);
+        this.playerTurn();
+    };
+    GoFish.prototype.playerTurn = function () {
+        this.display.innerHTML += "What would you like to ask for?";
+        this.player.displayHand();
+        document.getElementById("userNameHand").innerHTML = "User Hand | You have " + this.player.getBookCount() + this.spelling(this.player.getBookCount());
+        console.clear();
+        console.log("Dealer Hand");
+        this.dealer.logHand();
+    };
+    GoFish.prototype.spelling = function (num) {
+        if (num == 1) {
+            return " book";
+        }
+        return " books";
+    };
+    GoFish.prototype.dealerTurn = function () {
+        var randonNum = Math.floor(Math.random() * this.dealer.getHand().length);
+        var dealerAsk = this.dealer.getHand()[randonNum].getFaceValue();
+        this.display.innerHTML += "<br>Dealer asks for " + dealerAsk + ".";
+        this.dealerCheck(dealerAsk);
+    };
+    GoFish.prototype.dealerCheck = function (askCard) {
+        if (this.checkInHand(askCard, this.player)) {
+            this.swapCards(this.player, this.dealer, askCard);
+            this.checkHandSize(this.player);
+            this.display.innerHTML += "<br>Dealer got a match<br>";
+            this.checkBooks(this.dealer);
+            this.dealerTurn();
+        }
+        else {
+            this.display.innerHTML += "<br>Dealer did not get a match<br>";
+            _super.prototype.giveCards.call(this, this.dealer, 1);
+            this.playerTurn();
+        }
+    };
+    GoFish.prototype.askPlayerForCardClick = function () {
+        var playerInput = this.input.value.toLowerCase();
+        this.input.value = "";
+        if (this.checkInHand(playerInput, this.dealer)) {
+            this.swapCards(this.dealer, this.player, playerInput);
+            this.checkHandSize(this.dealer);
+            this.display.innerHTML = "You got a match<br>";
+            this.checkBooks(this.player);
+            this.playerTurn();
+        }
+        else {
+            this.display.innerHTML = "No match GO FISH!<br>";
+            _super.prototype.giveCards.call(this, this.player, 1);
+            this.dealerTurn();
+        }
+    };
+    GoFish.prototype.checkHandSize = function (player) {
+        if (player.getHand().length == 0) {
+            _super.prototype.giveCards.call(this, player, 5);
+        }
+    };
+    GoFish.prototype.swapCards = function (fromPlayer, toPlayer, swap) {
+        var newHand = [];
+        for (var i = 0; i < fromPlayer.getHand().length; i++) {
+            var currentCard = fromPlayer.getHand()[i];
+            if (currentCard.getFaceValue().toLowerCase() == swap.toLowerCase()) {
+                toPlayer.addCard(currentCard);
+            }
+            else {
+                newHand.push(currentCard);
+            }
+        }
+        fromPlayer.setHand(newHand);
+    };
+    GoFish.prototype.checkInHand = function (input, player) {
+        for (var i = 0; i < player.getHand().length; i++) {
+            if (input.toLowerCase() == player.getHand()[i].getFaceValue().toLowerCase()) {
+                return true;
+            }
+        }
+        return false;
+    };
+    GoFish.prototype.checkBooks = function (player) {
+        var map = [];
+        for (var i = 0; i < player.getHand().length; i++) {
+            var place = player.getHand()[i].getFaceValue();
+            if (map[place] == undefined) {
+                map[place] = 1;
+            }
+            else {
+                map[place] += 1;
+            }
+        }
+        for (var key in map) {
+            if (map[key] == 4) {
+                console.log("Book Found");
+                this.makeBook(player, key);
+            }
+        }
+    };
+    GoFish.prototype.makeBook = function (player, value) {
+        var newHand = [];
+        for (var i = 0; i < player.getHand().length; i++) {
+            var currentCard = player.getHand()[i];
+            if (currentCard.getFaceValue().toLowerCase() != value.toLowerCase()) {
+                newHand.push(currentCard);
+            }
+        }
+        player.setHand(newHand);
+        player.addBook();
+    };
+    return GoFish;
+}(CardGame));
 /// <reference path="Player/player.ts"/>
 /// <reference path="games/goFish.ts"/>
 var Casino = /** @class */ (function () {
@@ -77,6 +329,10 @@ var Casino = /** @class */ (function () {
                 this.goFish = new GoFish(this.player);
                 this.goFish.init();
             }
+            case "craps": {
+                this.craps = new Craps(this.player);
+                this.craps.init();
+            }
         }
     };
     Casino.prototype.nameInput = function () {
@@ -88,38 +344,44 @@ var Casino = /** @class */ (function () {
     return Casino;
 }());
 var Craps = /** @class */ (function () {
-    function Craps() {
+    function Craps(player) {
+        this.display = document.getElementById("display");
+        this.input = document.getElementById("text_input");
+        this.button = document.getElementById("submit");
     }
     Craps.prototype.init = function () {
-        document.getElementById("display").innerHTML += "Welcome to Craps!";
+        document.getElementById("display").innerHTML = "Welcome to Craps!";
+        this.button.value = "Roll The Dice";
+        this.button.setAttribute("onclick", "casino.craps.wonRound()");
+        this.input.hidden = true;
     };
-    Craps.prototype.wonRound = function (params) {
+    Craps.prototype.wonRound = function () {
         var win = 0;
         var lose = 0;
         var diceValue = Dice.getRandomInt(2, 12);
-        document.getElementById("display").innerHTML += diceValue;
+        document.getElementById("display").innerHTML += "<br>" + diceValue;
         if (diceValue === 7 || diceValue === 11) {
             win = 1;
-            var rollWin = "You rolled " + diceValue + ". You Win!";
-            document.getElementById("display").innerHTML += rollWin;
+            var rollWin = "You rolled " + diceValue + ". <br>You Win!";
+            document.getElementById("display").innerHTML += "<br>" + rollWin;
         }
         else if (diceValue === 2 || diceValue === 3 || diceValue === 12) {
             lose = 1;
             var rollLose = "You rolled " + diceValue + ". You Lose.";
-            document.getElementById("display").innerHTML += rollLose;
+            document.getElementById("display").innerHTML += "<br>" + rollLose;
         }
         else {
-            document.getElementById("display").innerHTML += "Keep rolling until you hit the point number.";
+            document.getElementById("display").innerHTML += "<br>" + "Keep rolling until you hit the point number.";
             var secondRoll = Dice.getRandomInt(2, 12);
             while (secondRoll != diceValue && secondRoll != 7) {
                 secondRoll = Dice.getRandomInt(2, 12);
             }
             if (secondRoll === 7) {
-                document.getElementById("display").innerHTML += "You rolled a 7. You Lost!";
+                document.getElementById("display").innerHTML += "<br>" + "You rolled a 7. You Lost!";
                 lose = 1;
             }
             else {
-                document.getElementById("display").innerHTML += "You rolled the point number " + secondRoll + "You Win!";
+                document.getElementById("display").innerHTML += "<br>" + "You rolled the point number " + secondRoll + "You Win!";
                 win = 1;
             }
         }
@@ -127,92 +389,6 @@ var Craps = /** @class */ (function () {
     };
     return Craps;
 }());
-var Card = /** @class */ (function () {
-    function Card(suit, numValue, faceValue) {
-        this.suit = suit;
-        this.numValue = numValue;
-        this.faceValue = faceValue;
-    }
-    Card.prototype.getSuit = function () {
-        return this.suit;
-    };
-    Card.prototype.getNumValue = function () {
-        return this.numValue;
-    };
-    Card.prototype.getFaceValue = function () {
-        return this.faceValue;
-    };
-    Card.prototype.toString = function () {
-        return this.faceValue + " of " + this.suit;
-        //return "Suit: "+this.suit+" Value: "+this.value;
-    };
-    return Card;
-}());
-/// <reference path="card.ts"/>
-var Deck = /** @class */ (function () {
-    function Deck() {
-        this.cards = [];
-        this.suits = ["HEARTS", "DIAMONDS", "CLUBS", "SPADES"];
-        this.faceValues = ["ACE", "2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING"];
-    }
-    Deck.prototype.createFullDeck = function () {
-        for (var _i = 0, _a = this.suits; _i < _a.length; _i++) {
-            var suit = _a[_i];
-            for (var i = 0; i < this.faceValues.length; i++) {
-                var num = i + 1;
-                if (num > 10) {
-                    num = 10;
-                }
-                this.cards.push(new Card(suit, num, this.faceValues[i]));
-            }
-        }
-        this.shuffle();
-    };
-    Deck.prototype.shuffle = function () {
-        for (var i = 0; i < this.cards.length; i++) {
-            var randonNum = Math.floor(Math.random() * this.cards.length);
-            _a = [this.cards[randonNum], this.cards[i]], this.cards[i] = _a[0], this.cards[randonNum] = _a[1];
-        }
-        var _a;
-    };
-    return Deck;
-}());
-/// <reference path="player.ts"/>
-var CardPlayer = /** @class */ (function (_super) {
-    __extends(CardPlayer, _super);
-    function CardPlayer() {
-        var _this = _super.call(this, "CardPlayer", 0, 0) || this;
-        _this.hand = [];
-        return _this;
-    }
-    CardPlayer.prototype.getHand = function () {
-        return this.hand;
-    };
-    CardPlayer.prototype.addCard = function (card) {
-        this.hand.push(card);
-    };
-    CardPlayer.prototype.clearHand = function () {
-        this.hand = [];
-    };
-    CardPlayer.prototype.setHand = function (hand) {
-        this.hand = hand;
-    };
-    CardPlayer.prototype.displayHand = function () {
-        var displayHand = document.getElementById("playerHand");
-        displayHand.innerHTML = "";
-        this.hand.sort();
-        for (var i = 0; i < this.hand.length; i++) {
-            var currentCard = this.hand[i];
-            displayHand.innerHTML += "<img src = ././images/cards/" + currentCard.getFaceValue() + "_of_" + currentCard.getSuit() + ".png width=\"90\"height=\130\">";
-        }
-    };
-    CardPlayer.prototype.logHand = function () {
-        for (var i = 0; i < this.hand.length; i++) {
-            console.log(this.hand[i].getFaceValue() + " " + this.hand[i].getSuit());
-        }
-    };
-    return CardPlayer;
-}(Player));
 /// <reference path="cardPlayer.ts"/>
 var GoFishPlayer = /** @class */ (function (_super) {
     __extends(GoFishPlayer, _super);
@@ -234,42 +410,12 @@ var GoFishPlayer = /** @class */ (function (_super) {
 /// <reference path="Util/deck.ts"/>
 /// <reference path="games/goFish.ts"/>
 /// <reference path="Player/gofishPlayer.ts"/>
-var craps = new Craps();
-craps.init();
-var deck = new Deck();
-/// <reference path="cardPlayer.ts"/>
-var CardDealer = /** @class */ (function (_super) {
-    __extends(CardDealer, _super);
-    function CardDealer() {
-        return _super.call(this) || this;
-    }
-    return CardDealer;
-}(CardPlayer));
-/// <reference path="../Util/deck.ts"/>
-/// <reference path="../Player/cardPlayer.ts"/>
-/// <reference path="../Player/cardDealer.ts"/>
-var CardGame = /** @class */ (function () {
-    function CardGame() {
-        this.deck = new Deck().getDeck();
-    }
-    CardGame.prototype.dealCards = function (dealer, player, amount) {
-        dealer.clearHand();
-        player.clearHand();
-        for (var i = 0; i < amount; i++) {
-            dealer.addCard(this.deck.pop());
-            player.addCard(this.deck.pop());
-        }
-    };
-    CardGame.prototype.giveCards = function (player, amount) {
-        for (var i = 0; i < amount; i++) {
-            player.addCard(this.deck.pop());
-        }
-    };
-    CardGame.prototype.getDeck = function () {
-        return this.deck;
-    };
-    return CardGame;
-}());
+var casino = new Casino();
+casino.init();
+// var craps = new Craps();
+// var deck = new Deck()
+// let goFish = new GoFish(casino.getPlayer())
+//goFish.init();
 /// <reference path="cardGame.ts" />
 var Blackjack = /** @class */ (function (_super) {
     __extends(Blackjack, _super);

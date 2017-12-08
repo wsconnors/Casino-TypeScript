@@ -10,6 +10,7 @@ class Casino{
   amount:number;
   player:Player;
   public goFish;
+  public craps;
 
   constructor() {
     this.displayEle = document.getElementById("display");
@@ -63,6 +64,10 @@ class Casino{
       case "go fish":{
         this.goFish = new GoFish(this.player);
         this.goFish.init();
+      }
+      case "craps":{
+        this.craps = new Craps(this.player);
+        this.craps.init();
       }
     }
   }
