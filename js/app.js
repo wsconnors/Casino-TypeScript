@@ -328,10 +328,16 @@ var Casino = /** @class */ (function () {
             case "go fish": {
                 this.goFish = new GoFish(this.player);
                 this.goFish.init();
+                break;
             }
             case "craps": {
                 this.craps = new Craps(this.player);
                 this.craps.init();
+                break;
+            }
+            case "blackjack": {
+                this.blackjack = new Blackjack(this.player);
+                this.blackjack.init();
             }
         }
     };
@@ -353,7 +359,7 @@ var Craps = /** @class */ (function () {
         document.getElementById("display").innerHTML = "Welcome to Craps!";
         this.button.value = "Roll The Dice";
         this.button.setAttribute("onclick", "casino.craps.wonRound()");
-        this.input.hidden = true;
+        //this.input.hidden = true;
     };
     Craps.prototype.wonRound = function () {
         var win = 0;
@@ -381,7 +387,7 @@ var Craps = /** @class */ (function () {
                 lose = 1;
             }
             else {
-                document.getElementById("display").innerHTML += "<br>" + "You rolled the point number " + secondRoll + "You Win!";
+                document.getElementById("display").innerHTML += "<br>" + "You rolled the point number " + secondRoll + "<br>You Win!";
                 win = 1;
             }
         }
