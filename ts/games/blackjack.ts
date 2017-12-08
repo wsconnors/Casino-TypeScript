@@ -1,3 +1,5 @@
+/// <reference path="../Player/blackjackPlayer.ts"/>
+
 class Blackjack extends CardGame{
   player:BlackjackPlayer;
   dealer:BlackjackDealer;
@@ -9,7 +11,11 @@ class Blackjack extends CardGame{
     this.display = document.getElementById("display");
     this.input = document.getElementById("text_input");
     this.buttom = document.getElementById("submit");
-    this.player = new GoFishPlayer(player);
-    this.dealer = new GoFishPlayer(new Player("Dealer",0,0));
+    this.player = new BlackjackPlayer(player);
+    this.dealer = new BlackjackDealer();
+  }
+
+  init():void{
+    document.getElementById("blackjack").hidden = false;
   }
 }
