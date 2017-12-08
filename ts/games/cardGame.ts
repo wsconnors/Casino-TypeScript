@@ -1,13 +1,14 @@
 /// <reference path="../Util/deck.ts"/>
 /// <reference path="../Player/cardPlayer.ts"/>
-/// <reference path="../Player/cardDealer.ts"/>
-class CardGame{
+/// <reference path="../casino.ts"/>
+
+class CardGame {
   deck:Card[];
   constructor(){
     this.deck = new Deck().getDeck();
   }
 
-  dealCards(dealer:CardDealer,player:CardPlayer,amount:number){
+  dealCards(dealer:CardPlayer,player:CardPlayer,amount:number){
     dealer.clearHand();
     player.clearHand();
     for (let i = 0; i <amount; i++) {

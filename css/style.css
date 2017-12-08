@@ -118,9 +118,11 @@ h1 {font-weight: bold; margin-left: 10px;}
 #display {
     border: 1px #aaa solid;
     padding:10px;
-    min-height:300px;
+    width: 600px;
+    height: 200px;
     background:#eee;
 		margin-bottom:10px;
+
 }
 #menu {
     float: left;

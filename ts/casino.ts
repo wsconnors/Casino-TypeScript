@@ -56,9 +56,16 @@ class Casino{
   }
 
   gameOptions():void{
+    document.getElementById("cardGame").hidden = true;
     this.displayEle.innerHTML = "What game would you like to play?<br>Options:<br>| BLACKJACK | GO FISH | CRAPS |"
     this.submit.setAttribute("onclick","casino.takeOptions()")
     this.textInput.setAttribute("placeholder","GAME")
+    // document.getElementById("gameOptions").hidden = false;
+    // this.submit.hidden = true;
+    // this.textInput.hidden = true;
+    // this.goFish = new GoFish(this.player);
+    // this.craps = new Craps(this.player);
+    // this.blackjack = new Blackjack(this.player);
   }
 
   takeOptions():void{
@@ -67,14 +74,17 @@ class Casino{
       case "go fish":{
         this.goFish = new GoFish(this.player);
         this.goFish.init();
+        break;
       }
       case "craps":{
         this.craps = new Craps(this.player);
         this.craps.init();
+        break;
       }
       case "blackjack":{
         this.blackjack = new Blackjack(this.player);
         this.blackjack.init()
+        break;
       }
     }
   }

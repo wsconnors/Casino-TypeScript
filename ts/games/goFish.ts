@@ -26,7 +26,7 @@ class GoFish extends CardGame{
 
   playerTurn():void{
     this.display.innerHTML += "What would you like to ask for?"
-    this.player.displayHand();
+    this.player.displayHand(true);
     document.getElementById("userNameHand").innerHTML = "User Hand | You have "+this.player.getBookCount()+this.spelling(this.player.getBookCount());
     console.clear();
     console.log("Dealer Hand");
