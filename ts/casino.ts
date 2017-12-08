@@ -1,5 +1,7 @@
 /// <reference path="Player/player.ts"/>
 /// <reference path="games/goFish.ts"/>
+/// <reference path="games/craps.ts"/>
+/// <reference path="games/blackjack.ts"/>
 
 class Casino{
   displayEle: any;
@@ -11,6 +13,7 @@ class Casino{
   player:Player;
   public goFish;
   public craps;
+  public blackjack;
 
   constructor() {
     this.displayEle = document.getElementById("display");
@@ -68,6 +71,10 @@ class Casino{
       case "craps":{
         this.craps = new Craps(this.player);
         this.craps.init();
+      }
+      case "blackjack":{
+        this.blackjack = new Blackjack(this.player);
+        this.blackjack.init()
       }
     }
   }
