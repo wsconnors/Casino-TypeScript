@@ -17,14 +17,14 @@
     </header>
     <h4 id="userInfo" hidden="true"><h4>
 
-    <h1 id="header">TypeScript Casino</h1>
+    <h1 id="header">Dice Roulette Casino</h1>
     <div id="cardGame" hidden=true>
       <h2 id="userNameHand">User Hand</h2>
       <div id="playerHand"></div>
     </div>
 
     <section id="main">
-    	<div id="display"></div>
+        <div id="display"></div>
 
       <div id="blackjack" hidden=true>
         <input type="submit" id="hit" value = "Hit" class="btn btn-danger" onclick="casino.blackjack.hit()">
@@ -44,6 +44,8 @@
 
       <input type="submit" id="playAgain" value="Play Again"hidden = true>
       <input type="submit" id="mainMenu"value="Main Menu" onclick="casino.gameOptions()" hidden = true>
+      <button (click)="refresh()">Log Out</button>
+      
 
       <div id="pot" hidden= true></div>
     </section>

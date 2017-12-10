@@ -30,6 +30,10 @@ class Casino{
     this.displayEle.innerHTML = "Enter your name";
   }
 
+  refresh(): void {
+    window.location.reload();
+  }
+
   getName():void{
     this.name = this.textInput.value;
     this.textInput.value = "";
@@ -96,5 +100,7 @@ class Casino{
   getPlayer():Player{
     return this.player;
   }
+
+
 
 }

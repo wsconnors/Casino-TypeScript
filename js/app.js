@@ -305,7 +305,7 @@ var Craps = /** @class */ (function () {
         document.getElementById("display").innerHTML = "Welcome to Craps!";
         this.button.value = "Roll The Dice";
         this.button.setAttribute("onclick", "casino.craps.wonRound()");
-        this.input.hidden = true;
+        //this.input.hidden = true;
     };
     Craps.prototype.wonRound = function () {
         var win = 0;
@@ -496,6 +496,9 @@ var Casino = /** @class */ (function () {
     };
     Casino.prototype.loginOptions = function () {
         this.displayEle.innerHTML = "Enter your name";
+    };
+    Casino.prototype.refresh = function () {
+        window.location.reload();
     };
     Casino.prototype.getName = function () {
         this.name = this.textInput.value;
