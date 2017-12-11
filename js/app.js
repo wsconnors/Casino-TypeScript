@@ -394,6 +394,7 @@ var Blackjack = /** @class */ (function (_super) {
     };
     Blackjack.prototype.takeBet = function () {
         this.input.setAttribute("placeholder", "BET");
+        this.input.setAttribute("type", "number");
         this.input.value = "";
         this.submit.setAttribute("onclick", "casino.blackjack.inputBet()");
         this.display.innerHTML = "How much would you like to bet?";
@@ -413,6 +414,7 @@ var Blackjack = /** @class */ (function (_super) {
     Blackjack.prototype.inputBet = function () {
         this.pot = parseInt(this.input.value);
         this.showStart();
+        this.input.setAttribute("type", "text");
         this.potEle.innerHTML = "Pot: " + this.pot;
         _super.prototype.dealCards.call(this, this.dealer, this.player, 2);
         this.playerTurn();
@@ -504,6 +506,7 @@ var Casino = /** @class */ (function () {
         this.name = this.textInput.value;
         this.textInput.value = "";
         this.textInput.setAttribute("placeholder", "AGE");
+        this.textInput.setAttribute("type", "number");
         this.submit.setAttribute("onclick", "casino.getAge()");
         this.displayEle.innerHTML = "Enter age";
     };
@@ -517,6 +520,7 @@ var Casino = /** @class */ (function () {
     Casino.prototype.getAmount = function () {
         this.amount = parseInt(this.textInput.value);
         this.textInput.value = "";
+        this.textInput.setAttribute("type", "text");
         this.player = new Player(this.name, this.age, this.amount);
         document.getElementById("userInfo").innerHTML = this.player.toString();
         document.getElementById("userInfo").hidden = false;

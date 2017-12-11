@@ -38,6 +38,7 @@ class Casino{
     this.name = this.textInput.value;
     this.textInput.value = "";
     this.textInput.setAttribute("placeholder","AGE");
+    this.textInput.setAttribute("type", "number")
     this.submit.setAttribute("onclick","casino.getAge()")
     this.displayEle.innerHTML = "Enter age";
   }
@@ -53,6 +54,7 @@ class Casino{
   getAmount():void{
     this.amount = parseInt(this.textInput.value);
     this.textInput.value = "";
+    this.textInput.setAttribute("type","text")
     this.player = new Player(this.name,this.age,this.amount);
     document.getElementById("userInfo").innerHTML = this.player.toString();
     document.getElementById("userInfo").hidden = false;
