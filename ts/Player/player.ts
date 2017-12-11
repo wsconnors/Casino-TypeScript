@@ -2,6 +2,7 @@ class Player{
   name:string;
   age:number;
   amount:number;
+  newAmount: number;
 
   constructor(name:string,age:number,amount:number){
     this.name = name;
@@ -19,6 +20,10 @@ class Player{
     return this.amount;
   }
 
+  setAmount(amount: number){
+    return this.amount;
+  }
+  
   toString(): string{
     return "Name: "+this.name+" | Age: "+this.age+" | Amount: "+this.amount;
   }
