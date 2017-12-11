@@ -31,7 +31,7 @@ class Casino{
   }
 
   refresh(): void {
-    window.location.reload();
+    window.location.reload(true);
   }
 
   getName():void{

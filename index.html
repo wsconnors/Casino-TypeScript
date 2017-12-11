@@ -38,14 +38,19 @@
       </div>
 
 			<div id="input">
-				<input type="text" name="text_input" id="text_input" placeholder="NAME">
+        <input type="text" name="text_input" id="text_input" placeholder="NAME">
         <input type="submit" value="submit" id="submit" onclick="casino.getName()">
 			</div>
 
       <input type="submit" id="playAgain" value="Play Again"hidden = true>
       <input type="submit" id="mainMenu"value="Main Menu" onclick="casino.gameOptions()" hidden = true>
-      <button (click)="refresh()">Log Out</button>
+      <button id="myButton" class="float-left submit-button" >Log Out</button>
       
+      <script type="text/javascript">
+          document.getElementById("myButton").onclick = function () {
+              location.href = "../Casino-TypeScript/index.html";
+          };
+      </script>
 
       <div id="pot" hidden= true></div>
     </section>
