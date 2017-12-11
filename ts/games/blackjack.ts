@@ -11,6 +11,7 @@ class Blackjack extends CardGame{
   blackjackInput:any;
   cardGameEle:any;
   playAgainEle:any;
+  amount: number
   constructor(player:Player){
     super();
     this.display = document.getElementById("display");
@@ -33,8 +34,8 @@ class Blackjack extends CardGame{
   takeBet():void{
     this.input.setAttribute("placeholder","BET")
     this.input.value = "";
-    this.submit.setAttribute("onclick","casino.blackjack.inputBet()")
     this.display.innerHTML = "How much would you like to bet?"
+    this.submit.setAttribute("onclick","casino.blackjack.inputBet()")    
   }
 
   swapHideElements(...elements:any[]):void{
@@ -50,7 +51,7 @@ class Blackjack extends CardGame{
   inputBet():void{
     this.pot = parseInt(this.input.value);
     this.showStart();
-    this.potEle.innerHTML = "Pot: "+this.pot;
+    this.potEle.innerHTML = "Pot: "+ this.pot;
     super.dealCards(this.dealer,this.player,2);
     this.playerTurn();
   }
@@ -91,8 +92,11 @@ class Blackjack extends CardGame{
     (this.player.getScore() < 21 && this.dealer.getScore() < this.player.getScore()) ||
     (this.player.getScore() < 21 && this.dealer.getScore() > 21)){
       this.setDisplay("You win");
+      this.amount += this.pot; 
     }else{
       this.setDisplay("You lose");
+      this.amount -= this.pot;
+
     }
     this.endGame();
   }

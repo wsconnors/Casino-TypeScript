@@ -128,15 +128,13 @@ h1 {
     margin-left: 10px;
     color: white;
 }
-#main {
-
-}
+/* #main {} */
 #display {
     border: 1px #aaa solid;
     padding:10px;
     width: 600px;
     height: 200px;
-    background:rgb(177, 220, 236);
+    background:rgb(219, 250, 208);
 	margin-bottom:10px;
     border-radius: 25px;    
 }
