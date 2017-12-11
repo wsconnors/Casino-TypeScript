@@ -31,6 +31,7 @@ class Blackjack extends CardGame{
   }
 
   takeBet():void{
+    super.createNewDeck();
     this.input.setAttribute("placeholder","BET")
     this.input.setAttribute("type","number")
     this.input.value = "";
@@ -101,7 +102,7 @@ class Blackjack extends CardGame{
 
   endGame():void{
     this.displayUserInfo()
-    this.addToDisplay("<br>Dealer had: "+this.dealer.getScore()+"<br>"+this.dealer.getDisplayHand());
+    this.addToDisplay("<br>Dealer has: "+this.dealer.getScore()+"<br>"+this.dealer.getDisplayHand());
     this.swapHideElements(this.potEle,this.playAgainEle,document.getElementById("mainMenu"),document.getElementById("blackjack"))
   }
 

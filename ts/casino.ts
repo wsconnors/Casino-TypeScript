@@ -66,6 +66,8 @@ class Casino{
     this.displayEle.innerHTML = "What game would you like to play?<br>Options:<br>| BLACKJACK | GO FISH | CRAPS |"
     this.submit.setAttribute("onclick","casino.takeOptions()")
     this.textInput.setAttribute("placeholder","GAME")
+    this.submit.hidden = false;
+    this.textInput.hidden = false;
     // document.getElementById("gameOptions").hidden = false;
     // this.submit.hidden = true;
     // this.textInput.hidden = true;

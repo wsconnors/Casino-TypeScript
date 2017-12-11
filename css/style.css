@@ -10,8 +10,8 @@
     padding: 0;
 }
 
-body { font: 14px/1.4 arial, sans-serif; 
-    background-image: url("../images/Dice-Roulette-Casino-wallpaper.jpg"); 
+body { font: 14px/1.4 arial, sans-serif;
+    background-image: url("../images/Dice-Roulette-Casino-wallpaper.jpg");
     background-size: 100%;
  /* background-color: rgb(98, 149, 151); */
 }
@@ -124,7 +124,7 @@ article {margin: 5%;}
 article p { margin-bottom: 20px;}
 section {margin:10px;}
 h1 {
-    font-weight: bold; 
+    font-weight: bold;
     margin-left: 10px;
     color: white;
 }
@@ -135,10 +135,10 @@ h1 {
     border: 1px #aaa solid;
     padding:10px;
     width: 600px;
-    height: 200px;
+    min-height: 200px;
     background:rgb(177, 220, 236);
 	margin-bottom:10px;
-    border-radius: 25px;    
+    border-radius: 25px;
 }
 #menu {
     float: left;
