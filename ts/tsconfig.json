@@ -1,5 +1,5 @@
 {
-    "compileOnSave": true,
+    "complieOnSave": true,
     "compilerOptions": {
         "sourceMap": true,
         "target": "es5",

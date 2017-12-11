@@ -12,7 +12,7 @@ class Craps{
         document.getElementById("display").innerHTML = "Welcome to Craps!";
         this.button.value="Roll The Dice"
         this.button.setAttribute("onclick", "casino.craps.wonRound()")
-        this.input.hidden = true;
+        //this.input.hidden = true;
     }
     wonRound() {
         var win: number = 0;

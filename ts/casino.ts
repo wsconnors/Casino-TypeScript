@@ -1,5 +1,7 @@
 /// <reference path="Player/player.ts"/>
 /// <reference path="games/goFish.ts"/>
+/// <reference path="games/craps.ts"/>
+/// <reference path="games/blackjack.ts"/>
 
 class Casino{
   displayEle: any;
@@ -11,6 +13,7 @@ class Casino{
   player:Player;
   public goFish;
   public craps;
+  public blackjack;
 
   constructor() {
     this.displayEle = document.getElementById("display");
@@ -25,6 +28,10 @@ class Casino{
 
   loginOptions():void{
     this.displayEle.innerHTML = "Enter your name";
+  }
+
+  refresh(): void {
+    window.location.reload(true);
   }
 
   getName():void{
@@ -53,9 +60,16 @@ class Casino{
   }
 
   gameOptions():void{
+    document.getElementById("cardGame").hidden = true;
     this.displayEle.innerHTML = "What game would you like to play?<br>Options:<br>| BLACKJACK | GO FISH | CRAPS |"
     this.submit.setAttribute("onclick","casino.takeOptions()")
     this.textInput.setAttribute("placeholder","GAME")
+    // document.getElementById("gameOptions").hidden = false;
+    // this.submit.hidden = true;
+    // this.textInput.hidden = true;
+    // this.goFish = new GoFish(this.player);
+    // this.craps = new Craps(this.player);
+    // this.blackjack = new Blackjack(this.player);
   }
 
   takeOptions():void{
@@ -64,10 +78,17 @@ class Casino{
       case "go fish":{
         this.goFish = new GoFish(this.player);
         this.goFish.init();
+        break;
       }
       case "craps":{
         this.craps = new Craps(this.player);
         this.craps.init();
+        break;
+      }
+      case "blackjack":{
+        this.blackjack = new Blackjack(this.player);
+        this.blackjack.init()
+        break;
       }
     }
   }
@@ -79,5 +100,7 @@ class Casino{
   getPlayer():Player{
     return this.player;
   }
+
+
 
 }
