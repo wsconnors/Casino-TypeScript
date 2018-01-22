@@ -2,8 +2,6 @@ class Player{
   name:string;
   age:number;
   amount:number;
-  newAmount: number;
-
   constructor(name:string,age:number,amount:number){
     this.name = name;
     this.age = age;

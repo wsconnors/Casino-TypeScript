@@ -22,6 +22,10 @@ class CardGame {
         player.addCard(this.deck.pop());
     }
   }
+
+  createNewDeck():void{
+    this.deck = new Deck().getDeck();
+  }
   getDeck():Card[]{
     return this.deck;
   }

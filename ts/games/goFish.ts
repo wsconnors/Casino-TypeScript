@@ -5,6 +5,7 @@ class GoFish extends CardGame{
   display:any;
   input:any;
   button:any;
+  playAgainEle:any;
   constructor(player:Player){
     super();
     this.display = document.getElementById("display");
@@ -12,8 +13,13 @@ class GoFish extends CardGame{
     this.button = document.getElementById("submit");
     this.player = new GoFishPlayer(player);
     this.dealer = new GoFishPlayer(new Player("Dealer",0,0));
+    this.playAgainEle = document.getElementById("playAgain")
   }
   init(){
+    this.player.clearBooks();
+    this.dealer.clearBooks();
+    super.createNewDeck();
+    this.playAgainEle.setAttribute("onclick","casino.goFish.playAgain()")
     this.display.innerHTML = "";
     document.getElementById("header").innerHTML = "Welcome to Go Fish!"
     document.getElementById("cardGame").hidden = false;
@@ -53,7 +59,11 @@ class GoFish extends CardGame{
       this.checkHandSize(this.player);
       this.display.innerHTML += "<br>Dealer got a match<br>";
       this.checkBooks(this.dealer);
-      this.dealerTurn();
+      if(this.endGame()){
+        this.displayEnd()
+      }else{
+        this.dealerTurn();
+      }
     }else{
       this.display.innerHTML += "<br>Dealer did not get a match<br>";
       super.giveCards(this.dealer,1);
@@ -69,7 +79,11 @@ class GoFish extends CardGame{
       this.checkHandSize(this.dealer);
       this.display.innerHTML = "You got a match<br>";
       this.checkBooks(this.player);
-      this.playerTurn();
+      if(this.endGame()){
+        this.displayEnd()
+      }else{
+        this.playerTurn();
+      }
     }else{
       this.display.innerHTML = "No match GO FISH!<br>";
       super.giveCards(this.player,1);
@@ -137,5 +151,28 @@ class GoFish extends CardGame{
     }
     player.setHand(newHand);
     player.addBook();
+  }
+
+  endGame():boolean{
+    return super.getDeck().length < 5;
+  }
+
+  playAgain():void{
+    this.playAgainEle.hidden = true;
+    document.getElementById("mainMenu").hidden = true;
+    this.button.hidden = false;
+    this.input.hidden = false;
+    this.init()
+  }
+
+  displayEnd():void{
+    this.display.innerHTML = "Game over<br>"
+    this.display.innerHTML += "<br>your score: "+this.player.getBookCount();
+    this.display.innerHTML += "<br>computer score: "+this.dealer.getBookCount()+"<br>";
+    this.display.innerHTML += (this.player.getBookCount() > this.dealer.getBookCount()) ? "You won":"You lose"
+    this.playAgainEle.hidden = false;
+    document.getElementById("mainMenu").hidden = false;
+    this.button.hidden = true;
+    this.input.hidden = true;
   }
 }
