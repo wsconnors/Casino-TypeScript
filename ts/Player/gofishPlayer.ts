@@ -11,4 +11,7 @@ class GoFishPlayer extends CardPlayer{
   getBookCount():number{
     return this.bookCounter;
   }
+  clearBooks():void{
+    this.bookCounter = 0;
+  }
 }
